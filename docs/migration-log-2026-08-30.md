@@ -73,3 +73,15 @@ This migration log records intended relationship only. Existing `/research/[slug
 5. redirect target read-back returns HTTP 200 and no loop.
 
 Until that gate is complete, old DevSnack URLs remain unchanged.
+
+## Final result
+
+The gate passed after the GitHub Pages manifest, Board snapshot, production Knowledge UI, sitemap, and link audits were verified.
+
+- 30 migrated legacy Research slugs now return HTTP 308 with their mapped GitHub Pages `Location`.
+- 24 unique GitHub Pages targets return HTTP 200.
+- The production Research Board exposes 24 unique external Note links; `promoted_asset_url` remains `null` for all rows.
+- The 30 legacy details are excluded from the DevSnack sitemap and the migrated details resolve to `noindex` before redirect handling.
+- K1/K2 retained assets remain reachable and K2 representative URLs remain sitemap-indexable.
+- Draft 5건 and X `Unsloth → GGUF 변환 파이프라인` remain outside the redirect map.
+- Existing Research source rows were not deleted and are retained as redirect provenance.
