@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>ACE-Step 리페인트 (Repaint) — DevSnack Research Notebook</title>
+</head>
+<body>
+  <main>
+    <p><a href="../index.html">Research Notebook</a></p>
+    <p><strong>Research-stage Notebook:</strong> 이 문서는 완성된 Knowledge 글이 아니라 조사·불확실성·후속 검증을 기록한 공개 Note다.</p>
+    <dl>
+<dt>제목</dt><dd>ACE-Step 리페인트 (Repaint)</dd>
+<dt>researched_date</dt><dd>2026-07-02</dd>
+<dt>published_date</dt><dd>2026-08-30</dd>
+<dt>Category</dt><dd>media</dd>
+<dt>Status</dt><dd>experiment-candidate</dd>
+<dt>직접 실행 여부</dt><dd>가이드 확인만; 실제 repaint 적용 안 함</dd>
+<dt>직접 측정 여부</dt><dd>직접 음질 측정 안 함</dd>
+<dt>date_basis</dt><dd>원문 게시일을 researched_date로 사용</dd>
+<dt>promoted_asset_url</dt><dd>null</dd>
+</dl>
+    <h2>한 줄 요약</h2>
+    <p>기존 오디오 일부만 다시 생성하는 가이드이며, 원본 prompt·가사 재투입 조건을 실제로 검증해야 한다.</p>
+    <h2>조사 배경</h2>
+<p>ACE-Step 1.5의 특정 구간 재생성 원리와 API payload, 기존 곡의 결말·도입부 수정 사용 사례를 조사했다.</p>
+<h2>확인한 내용</h2>
+<ul>
+<li>마스크 구간만 다시 생성하고 앞뒤 오디오 맥락을 사용한다.</li>
+<li>원본 prompt와 전체 가사를 다시 넣어야 일관성이 유지된다고 기록되어 있다.</li>
+<li><code>conservative</code> mode와 0.4~0.6 strength를 우선하는 가이드가 있다.</li>
+<li>서버 최초 요청 lazy-load와 결과 파일 직접 확인 등 운영 주의점이 기록되어 있다.</li>
+</ul>
+<h2>확인하지 못한 내용</h2>
+<ul>
+<li>DevSnack 곡에 실제 repaint 적용</li>
+<li>구간 경계·음질의 청취 검증</li>
+<li>API polling과 output file 보존의 안정성</li>
+<li>다양한 BPM·key·언어 재현성</li>
+</ul>
+<h2>직접 실행 여부</h2>
+<p>가이드 확인만; 실제 repaint 적용 안 함</p>
+<h2>직접 측정 여부</h2>
+<p>직접 음질 측정 안 함</p>
+<h2>다음 실험/검증 계획</h2>
+<ol>
+<li>보존 가능한 테스트 오디오와 원본 prompt·가사를 고정한다.</li>
+<li>10초 구간 한 건을 conservative 설정으로 실행한다.</li>
+<li>경계·음질·파일 보존을 확인한 뒤 실제 곡 적용 여부를 판단한다.</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://devsnack-blog.vercel.app/research/ace-step-repaint">Original DevSnack Research 원문</a></li>
+</ul>
+<h2>Original DevSnack URL</h2>
+<ul>
+<li>https://devsnack-blog.vercel.app/research/ace-step-repaint</li>
+</ul>
+<h2>Promotion</h2>
+<ul>
+<li>이 Note는 조사 단계 기록이다. 직접 실행·측정·적용 결과가 별도 자산으로 검증되기 전까지 <code>promoted_asset_url</code>은 <code>null</code>이다.</li>
+</ul>
+  </main>
+</body>
+</html>

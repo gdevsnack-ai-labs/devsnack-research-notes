@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>Herdr — 에이전트 런타임/멀티플렉서 (YC F26) — DevSnack Research Notebook</title>
+</head>
+<body>
+  <main>
+    <p><a href="../index.html">Research Notebook</a></p>
+    <p><strong>Research-stage Notebook:</strong> 이 문서는 완성된 Knowledge 글이 아니라 조사·불확실성·후속 검증을 기록한 공개 Note다.</p>
+    <dl>
+<dt>제목</dt><dd>Herdr — 에이전트 런타임/멀티플렉서 (YC F26)</dd>
+<dt>researched_date</dt><dd>2026-08-12</dd>
+<dt>published_date</dt><dd>2026-08-30</dd>
+<dt>Category</dt><dd>agents</dd>
+<dt>Status</dt><dd>awaiting-test</dd>
+<dt>직접 실행 여부</dt><dd>실행하지 않음</dd>
+<dt>직접 측정 여부</dt><dd>직접 측정하지 않음</dd>
+<dt>date_basis</dt><dd>원문 게시일을 researched_date로 사용</dd>
+<dt>promoted_asset_url</dt><dd>null</dd>
+</dl>
+    <h2>한 줄 요약</h2>
+    <p>여러 AI 에이전트의 상태와 pane을 관리하는 Rust 기반 런타임으로, Hermes와 보완 관계인지 확인이 필요한 조사 후보다.</p>
+    <h2>조사 배경</h2>
+<p>멀티 에이전트 터미널 런타임의 기능과 Hermes와의 레이어 차이, ARM64 적용성을 조사했다.</p>
+<h2>확인한 내용</h2>
+<ul>
+<li>working·blocked·idle·done 상태 감지와 CLI·Socket API 기반 조율 구조가 기록되어 있다.</li>
+<li>Hermes Agent를 감지 가능한 에이전트로 문서에 등재한 사례가 원문에 있다.</li>
+<li>Hermes는 도구·메모리·크론·스킬·위임을 담당하고 Herdr은 에이전트가 실행되는 런타임으로 구분했다.</li>
+</ul>
+<h2>확인하지 못한 내용</h2>
+<ul>
+<li>GB10 ARM64 네이티브 지원</li>
+<li>실제 Hermes 세션을 Herdr에서 호스팅한 결과</li>
+<li>herdr.org 및 herdr.dev와의 관계</li>
+<li>사이트 티저 페이지의 실제 내용</li>
+</ul>
+<h2>직접 실행 여부</h2>
+<p>실행하지 않음</p>
+<h2>직접 측정 여부</h2>
+<p>직접 측정하지 않음</p>
+<h2>다음 실험/검증 계획</h2>
+<ol>
+<li>공식 저장소와 고정 release의 ARM64 빌드 가능성을 확인한다.</li>
+<li>작은 Hermes 세션을 attach하고 상태 감지·Socket API를 확인한다.</li>
+<li>로컬 Unix socket과 SSH 원격 attach의 권한·복구 동작을 검증한다.</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://devsnack-blog.vercel.app/research/herdr-yc-f26">Original DevSnack Research 원문</a></li>
+<li>원문에 수록된 주요 출처:</li>
+<li><a href="https://github.com/ogulcantuna/herdr">Herdr repository</a></li>
+</ul>
+<h2>Original DevSnack URL</h2>
+<ul>
+<li>https://devsnack-blog.vercel.app/research/herdr-yc-f26</li>
+</ul>
+<h2>Promotion</h2>
+<ul>
+<li>이 Note는 조사 단계 기록이다. 직접 실행·측정·적용 결과가 별도 자산으로 검증되기 전까지 <code>promoted_asset_url</code>은 <code>null</code>이다.</li>
+</ul>
+  </main>
+</body>
+</html>

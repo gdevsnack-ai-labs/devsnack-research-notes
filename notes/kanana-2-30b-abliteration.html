@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>Kanana-2-30B Abliteration + 파인튜닝 — DevSnack Research Notebook</title>
+</head>
+<body>
+  <main>
+    <p><a href="../index.html">Research Notebook</a></p>
+    <p><strong>Research-stage Notebook:</strong> 이 문서는 완성된 Knowledge 글이 아니라 조사·불확실성·후속 검증을 기록한 공개 Note다.</p>
+    <dl>
+<dt>제목</dt><dd>Kanana-2-30B Abliteration + 파인튜닝</dd>
+<dt>researched_date</dt><dd>2026-07-24</dd>
+<dt>published_date</dt><dd>2026-08-30</dd>
+<dt>Category</dt><dd>models</dd>
+<dt>Status</dt><dd>experiment-candidate</dd>
+<dt>직접 실행 여부</dt><dd>가이드만 확인; 실행하지 않음</dd>
+<dt>직접 측정 여부</dt><dd>직접 측정하지 않음</dd>
+<dt>date_basis</dt><dd>원문 게시일을 researched_date로 사용</dd>
+<dt>promoted_asset_url</dt><dd>null</dd>
+</dl>
+    <h2>한 줄 요약</h2>
+    <p>Kanana-2-30B에 OBLITERATUS와 Unsloth LoRA를 적용하는 가이드 조사이며 실제 실행은 아직 없다.</p>
+    <h2>조사 배경</h2>
+<p>한국어 특화 Kanana-2-30B-A3B에 abliteration·fine-tuning을 적용하는 절차와 GB10 메모리 가능성을 검토했다.</p>
+<h2>확인한 내용</h2>
+<ul>
+<li>OBLITERATUS nuclear 방법과 Unsloth LoRA 절차가 원문에 정리되어 있다.</li>
+<li>원문은 128GB unified memory 환경을 전제로 실행 순서를 제안한다.</li>
+<li>quantization 전 abliteration, recommend 단계와 검증 순서를 강조한다.</li>
+</ul>
+<h2>확인하지 못한 내용</h2>
+<ul>
+<li>OBLITERATUS 설치 여부</li>
+<li>abliteration 실행 결과</li>
+<li>LoRA 학습 결과·품질 변화</li>
+<li>최적 파라미터의 재현성</li>
+</ul>
+<h2>직접 실행 여부</h2>
+<p>가이드만 확인; 실행하지 않음</p>
+<h2>직접 측정 여부</h2>
+<p>직접 측정하지 않음</p>
+<h2>다음 실험/검증 계획</h2>
+<ol>
+<li>먼저 <code>obliteratus recommend</code>와 설치 조건을 별도 환경에서 확인한다.</li>
+<li>작은 검증 모델로 abliteration 전후를 비교한 뒤 LoRA 확대 여부를 판단한다.</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://devsnack-blog.vercel.app/research/kanana-2-30b-abliteration">Original DevSnack Research 원문</a></li>
+</ul>
+<h2>Original DevSnack URL</h2>
+<ul>
+<li>https://devsnack-blog.vercel.app/research/kanana-2-30b-abliteration</li>
+</ul>
+<h2>Promotion</h2>
+<ul>
+<li>이 Note는 조사 단계 기록이다. 직접 실행·측정·적용 결과가 별도 자산으로 검증되기 전까지 <code>promoted_asset_url</code>은 <code>null</code>이다.</li>
+</ul>
+  </main>
+</body>
+</html>

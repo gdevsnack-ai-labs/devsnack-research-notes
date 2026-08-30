@@ -1,73 +1,93 @@
 # DevSnack Research Notebook
 
-DevSnack Research 원문 중 파일럿 4개를 공개 Notebook 형식으로 옮긴 공간이다.
+DevSnack Research 원문을 공개 Notebook으로 보존하는 저장소다. Note는 완성된 Knowledge 글이 아니라 조사 단계·불확실성·후속 검증을 기록한다.
 
-이 저장소의 Note는 완성된 Knowledge 글이 아니다. 조사 당시 확인한 사실, 아직 확인하지 않은 부분, 다음 검증 계획을 분리해 기록한다.
-
-## Pilot scope
-
-- DeepSeek Harness (dsh)
-- Oh My Hermes (OMH)
-- DFlash 2 + Qwen3.8-27B
-- FLUX 3
-
-이번 단계에서는 전체 R1/R2를 이전하지 않았다. 기존 DevSnack URL·DB·production·redirect는 변경하지 않았다.
-
-## Structure
+## Canonical structure
 
 ```text
 .
 ├── README.md
-├── index.html
+├── index.html                 # generated catalog
+├── data/
+│   └── research-notes.json    # generated public manifest
 ├── docs/
+│   ├── migration-log-2026-08-30.md
 │   ├── research-note-template.md
 │   └── research-board-proposal.md
-└── notes/
-    ├── deepseek-harness-dsh.html
-    ├── oh-my-hermes-omh.html
-    ├── dflash-2-qwen3-8-27b.html
-    └── flux-3.html
+├── scripts/
+│   ├── build_notebook.py      # Markdown → manifest/index/HTML
+│   └── test_build_notebook.py
+├── source/                    # canonical Markdown source
+│   ├── agents/
+│   ├── models/
+│   ├── tools/
+│   └── media/
+└── notes/                     # generated Pages HTML; do not hand-edit
 ```
 
-- `notes/`: GitHub Pages에서 직접 공개하는 파일럿 Note
-- `docs/research-note-template.md`: 다음 Note에 사용할 최소 필드 템플릿
-- `docs/research-board-proposal.md`: DevSnack Research Board 행 구조 제안. 구현·DB 변경은 하지 않았다.
+`source/<category>/*.md`가 canonical source이고, `notes/*.html`, `index.html`, `data/research-notes.json`은 다음 명령으로 재생성한다.
 
-## Research Note fields
+```bash
+python3 scripts/build_notebook.py
+python3 scripts/test_build_notebook.py -v
+```
 
-각 Note는 다음 순서를 따른다.
+## Current migration scope
 
-1. 제목
-2. 날짜
-3. Category
-4. Status
-5. 한 줄 요약
-6. 조사 배경
-7. 확인한 내용
-8. 아직 확인하지 않은 내용
-9. 다음 실험/검증 계획
-10. Sources
-11. Original DevSnack URL
+- public R1: 10건
+- public R2: 11건
+- M 통합 Note: 3건
+- 공개 Note 합계: 24건
+- draft 5건: 제외
+- X `Unsloth → GGUF 변환 파이프라인`: 제외
+- StockPulse·AITech output: 제외
+- K1/K2: DevSnack 내부 유지
 
-## Category rules
+## Note metadata
 
-- `models`: 모델, 추론 가속, 모델 비교
+각 Markdown Note는 다음 frontmatter를 가진다.
+
+```yaml
+title: "..."
+researched_date: "YYYY-MM-DD"
+published_date: "YYYY-MM-DD"
+category: "models | tools | agents | media | infra | misc"
+status: "research-complete | experiment-candidate | awaiting-test | archived"
+summary: "..."
+direct_execution: "..."
+direct_measurement: "..."
+original_devsnack_url: "https://devsnack-blog.vercel.app/research/..."
+promoted_asset_url: null
+date_basis: "..."
+```
+
+- `researched_date`: 원문에 명시된 조사일이 있으면 그 날짜. 없으면 원문 게시일을 사용하고 `date_basis`에 표시한다.
+- `published_date`: 이 Notebook에 공개한 날짜.
+- `promoted_asset_url`: 실제 DevSnack 자산으로 승격되기 전에는 항상 `null`이다.
+
+## Category
+
+- `models`: 모델·추론 가속·모델 비교
 - `tools`: 독립 도구·유틸리티
-- `agents`: 에이전트, 하네스, 운영 레이어
+- `agents`: 에이전트·하네스·운영 레이어
 - `media`: 이미지·영상·음악·음성
 - `infra`: 런타임·배포·인프라
-- `misc`: 위 분류에 속하지 않는 항목
+- `misc`: 기타
 
-## Status rules
+## Status
 
-- `research-complete`: 원문 조사는 끝났지만 직접 실행·측정은 없음
-- `experiment-candidate`: 후속 실행·비교 계획이 있고 실험 후보로 남김
-- `awaiting-test`: 실행 조건이나 환경을 기다리는 상태
-- `archived`: 현재 공개·실험 우선순위가 낮아 보존만 하는 상태
+- `research-complete`: 조사 자체는 끝났으나 직접 실행·측정 없음
+- `experiment-candidate`: 후속 실행·비교 계획이 있는 후보
+- `awaiting-test`: 환경·지원·권한·호환성 때문에 테스트 대기
+- `archived`: 현재 우선순위가 낮고 provenance 보존만 하는 항목
 
-## Original DevSnack relationship
+R1/R2는 원본 분류이며 Status에 기계적으로 1:1 매핑하지 않는다.
 
-각 Note는 기존 DevSnack Research 원문을 삭제하거나 대체하지 않는다. 상세 원문과 기존 route는 `Original DevSnack URL`로 보존하고, GitHub Pages URL은 공개 Notebook의 외부 URL로 사용한다. 실제 결과가 생기면 별도의 DevSnack Lab·Benchmark·Knowledge 자산으로 승격하고 `promoted_asset_url`로 연결하는 방식을 제안한다.
+## DevSnack relationship
+
+DevSnack의 기존 Research URL은 원문 provenance로 보존한다. Board의 `external_url`은 이 저장소의 공개 Note를 가리키고, 실제 실행·측정·적용·반복 검증을 거쳐 독립 자산 가치가 생긴 경우에만 DevSnack Lab·Benchmark·Knowledge 자산을 별도로 만들고 `promoted_asset_url`을 채운다.
+
+이번 migration은 기존 DevSnack DB·production route·redirect를 변경하지 않는다. redirect는 별도 검증 게이트 이후에만 적용한다.
 
 ## Public URL
 

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>PixelGPT 24×24 픽셀아트 LoRA 학습 — DevSnack Research Notebook</title>
+</head>
+<body>
+  <main>
+    <p><a href="../index.html">Research Notebook</a></p>
+    <p><strong>Research-stage Notebook:</strong> 이 문서는 완성된 Knowledge 글이 아니라 조사·불확실성·후속 검증을 기록한 공개 Note다.</p>
+    <dl>
+<dt>제목</dt><dd>PixelGPT 24×24 픽셀아트 LoRA 학습</dd>
+<dt>researched_date</dt><dd>2026-07-31</dd>
+<dt>published_date</dt><dd>2026-08-30</dd>
+<dt>Category</dt><dd>media</dd>
+<dt>Status</dt><dd>awaiting-test</dd>
+<dt>직접 실행 여부</dt><dd>데이터 전처리·설정 준비만 실행; 학습은 보류</dd>
+<dt>직접 측정 여부</dt><dd>데이터 검사 일부만 존재; 학습 품질 측정 없음</dd>
+<dt>date_basis</dt><dd>원문 게시일을 researched_date로 사용</dd>
+<dt>promoted_asset_url</dt><dd>null</dd>
+</dl>
+    <h2>한 줄 요약</h2>
+    <p>픽셀아트 데이터 전처리와 학습 준비는 끝났지만 학습 실행 승인을 기다리는 상태다.</p>
+    <h2>조사 배경</h2>
+<p>24×24 픽셀아트 데이터셋과 SD1.5 LoRA 학습 준비 상태, 게임 스프라이트 활용 경로를 조사했다.</p>
+<h2>확인한 내용</h2>
+<ul>
+<li>20K 데이터셋과 19 family·133 category 분류 구조가 기록되어 있다.</li>
+<li>원문 기준 16,492장 전처리와 SD1.5 base·kohya 설정 준비가 완료되어 있다.</li>
+<li>해상도·색상·중복 검사는 데이터 수준에서 기록되어 있다.</li>
+<li>학습 후 512/1024 생성과 NEAREST 다운스케일을 활용하는 계획이 제안되어 있다.</li>
+</ul>
+<h2>확인하지 못한 내용</h2>
+<ul>
+<li>LoRA 학습 실행·샘플 품질</li>
+<li>학습 loss·재현성</li>
+<li>게임 스프라이트 활용 결과</li>
+<li>데이터 분류 오류가 학습에 미치는 영향</li>
+</ul>
+<h2>직접 실행 여부</h2>
+<p>데이터 전처리·설정 준비만 실행; 학습은 보류</p>
+<h2>직접 측정 여부</h2>
+<p>데이터 검사 일부만 존재; 학습 품질 측정 없음</p>
+<h2>다음 실험/검증 계획</h2>
+<ol>
+<li>학습 승인을 확인한다.</li>
+<li>고정 config와 소량 step으로 smoke test 후 샘플을 검토한다.</li>
+<li>학습이 실제로 가치 있는지 확인한 뒤 전체 epoch와 게임 적용을 진행한다.</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://devsnack-blog.vercel.app/research/pixelgpt-24-24-lora">Original DevSnack Research 원문</a></li>
+</ul>
+<h2>Original DevSnack URL</h2>
+<ul>
+<li>https://devsnack-blog.vercel.app/research/pixelgpt-24-24-lora</li>
+</ul>
+<h2>Promotion</h2>
+<ul>
+<li>이 Note는 조사 단계 기록이다. 직접 실행·측정·적용 결과가 별도 자산으로 검증되기 전까지 <code>promoted_asset_url</code>은 <code>null</code>이다.</li>
+</ul>
+  </main>
+</body>
+</html>

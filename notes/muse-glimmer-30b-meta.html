@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>Muse Glimmer 30B (Meta 오픈 에이전트 모델) — DevSnack Research Notebook</title>
+</head>
+<body>
+  <main>
+    <p><a href="../index.html">Research Notebook</a></p>
+    <p><strong>Research-stage Notebook:</strong> 이 문서는 완성된 Knowledge 글이 아니라 조사·불확실성·후속 검증을 기록한 공개 Note다.</p>
+    <dl>
+<dt>제목</dt><dd>Muse Glimmer 30B (Meta 오픈 에이전트 모델)</dd>
+<dt>researched_date</dt><dd>2026-08-12</dd>
+<dt>published_date</dt><dd>2026-08-30</dd>
+<dt>Category</dt><dd>models</dd>
+<dt>Status</dt><dd>experiment-candidate</dd>
+<dt>직접 실행 여부</dt><dd>실행하지 않음</dd>
+<dt>직접 측정 여부</dt><dd>직접 측정하지 않음; 외부·커뮤니티 수치만 기록</dd>
+<dt>date_basis</dt><dd>원문 게시일을 researched_date로 사용</dd>
+<dt>promoted_asset_url</dt><dd>null</dd>
+</dl>
+    <h2>한 줄 요약</h2>
+    <p>툴콜링·비전 보조 모델 후보로 GB10 fit 가능성이 조사됐지만, 직접 실행과 주력 모델 비교는 남아 있다.</p>
+    <h2>조사 배경</h2>
+<p>Meta의 오픈웨이트 에이전트 모델을 툴콜링·비전·GB10 메모리 관점에서 검토했다.</p>
+<h2>확인한 내용</h2>
+<ul>
+<li>Apache 2.0 오픈웨이트 30B dense 모델과 비전 인코더로 소개되어 있다.</li>
+<li>원문은 MCP Atlas·τ3-Banking·MMMU-Pro·TerminalBench 등 외부 또는 모델 카드 수치를 구분한다.</li>
+<li>Q4 메모리 fit과 Hermes Agent 하네스 보조 모델 가능성을 후보 판단으로 기록했다.</li>
+<li>지식 작업과 속도는 주력 교체보다 비전·툴콜링 보조 관점에서 신중히 보도록 결론냈다.</li>
+</ul>
+<h2>확인하지 못한 내용</h2>
+<ul>
+<li>GB10에서의 직접 실행 속도·품질</li>
+<li>Hermes tool call 실사용</li>
+<li>Qwen3.8-27B와 동일 조건 비교</li>
+<li>Muse Spark 1.2 공개 및 영향</li>
+</ul>
+<h2>직접 실행 여부</h2>
+<p>실행하지 않음</p>
+<h2>직접 측정 여부</h2>
+<p>직접 측정하지 않음; 외부·커뮤니티 수치만 기록</p>
+<h2>다음 실험/검증 계획</h2>
+<ol>
+<li>GB10에서 비전 입력과 툴콜링을 분리한 작은 테스트를 실행한다.</li>
+<li>Qwen3.8-27B와 동일 prompt·provider·검증 조건으로 비교한다.</li>
+<li>속도·메모리·툴콜링 실패를 함께 기록해 보조 모델 가치만 판단한다.</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://devsnack-blog.vercel.app/research/muse-glimmer-30b-meta">Original DevSnack Research 원문</a></li>
+</ul>
+<h2>Original DevSnack URL</h2>
+<ul>
+<li>https://devsnack-blog.vercel.app/research/muse-glimmer-30b-meta</li>
+</ul>
+<h2>Promotion</h2>
+<ul>
+<li>이 Note는 조사 단계 기록이다. 직접 실행·측정·적용 결과가 별도 자산으로 검증되기 전까지 <code>promoted_asset_url</code>은 <code>null</code>이다.</li>
+</ul>
+  </main>
+</body>
+</html>

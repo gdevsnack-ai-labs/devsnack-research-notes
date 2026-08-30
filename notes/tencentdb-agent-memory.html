@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>TencentDB Agent Memory — 텐센트 에이전트 메모리 시스템 — DevSnack Research Notebook</title>
+</head>
+<body>
+  <main>
+    <p><a href="../index.html">Research Notebook</a></p>
+    <p><strong>Research-stage Notebook:</strong> 이 문서는 완성된 Knowledge 글이 아니라 조사·불확실성·후속 검증을 기록한 공개 Note다.</p>
+    <dl>
+<dt>제목</dt><dd>TencentDB Agent Memory — 텐센트 에이전트 메모리 시스템</dd>
+<dt>researched_date</dt><dd>2026-08-11</dd>
+<dt>published_date</dt><dd>2026-08-30</dd>
+<dt>Category</dt><dd>agents</dd>
+<dt>Status</dt><dd>experiment-candidate</dd>
+<dt>직접 실행 여부</dt><dd>실행하지 않음</dd>
+<dt>직접 측정 여부</dt><dd>직접 측정하지 않음</dd>
+<dt>date_basis</dt><dd>원문 게시일을 researched_date로 사용</dd>
+<dt>promoted_asset_url</dt><dd>null</dd>
+</dl>
+    <h2>한 줄 요약</h2>
+    <p>Mermaid 기반 단기 메모리 오프로딩과 L0~L3 계층 기억을 결합한 로컬 우선 에이전트 메모리 조사다.</p>
+    <h2>조사 배경</h2>
+<p>TencentDB의 에이전트 메모리 구조와 Hermes 기본 메모리와의 역할 중복 가능성을 검토했다.</p>
+<h2>확인한 내용</h2>
+<ul>
+<li>Task Canvas/Mermaid 기반 단기 메모리와 L0~L3 계층 장기 기억을 제안한다.</li>
+<li>SQLite와 sqlite-vec를 기본 backend로 하며 완전 로컬 실행을 지향한다.</li>
+<li>원문은 WideSearch·PersonaMem 수치와 토큰 절감 수치를 공식 발표로 구분한다.</li>
+<li>Hermes와 연결할 gateway 경로가 언급되지만 별도 시스템으로 역할 분담이 필요하다.</li>
+</ul>
+<h2>확인하지 못한 내용</h2>
+<ul>
+<li>GB10 ARM64에서의 실제 설치</li>
+<li>Hermes gateway 연결과 첫 요청</li>
+<li>공식 benchmark의 독립 재현</li>
+<li>v2.0 팀 기능의 실제 운영성</li>
+</ul>
+<h2>직접 실행 여부</h2>
+<p>실행하지 않음</p>
+<h2>직접 측정 여부</h2>
+<p>직접 측정하지 않음</p>
+<h2>다음 실험/검증 계획</h2>
+<ol>
+<li>SQLite/sqlite-vec와 ARM64 조건을 별도로 확인한다.</li>
+<li>Hermes 메모리와 중복되지 않는 격리 profile에서 gateway 경로를 시험한다.</li>
+<li>장시간 세션에서 Mermaid canvas와 계층 기억의 비용·회수 품질을 비교한다.</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://devsnack-blog.vercel.app/research/tencentdb-agent-memory">Original DevSnack Research 원문</a></li>
+</ul>
+<h2>Original DevSnack URL</h2>
+<ul>
+<li>https://devsnack-blog.vercel.app/research/tencentdb-agent-memory</li>
+</ul>
+<h2>Promotion</h2>
+<ul>
+<li>이 Note는 조사 단계 기록이다. 직접 실행·측정·적용 결과가 별도 자산으로 검증되기 전까지 <code>promoted_asset_url</code>은 <code>null</code>이다.</li>
+</ul>
+  </main>
+</body>
+</html>

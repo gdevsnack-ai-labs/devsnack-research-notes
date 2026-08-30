@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>DGX Spark Local TTS Status Matrix — DevSnack Research Notebook</title>
+</head>
+<body>
+  <main>
+    <p><a href="../index.html">Research Notebook</a></p>
+    <p><strong>Research-stage Notebook:</strong> 이 문서는 완성된 Knowledge 글이 아니라 조사·불확실성·후속 검증을 기록한 공개 Note다.</p>
+    <dl>
+<dt>제목</dt><dd>DGX Spark Local TTS Status Matrix</dd>
+<dt>researched_date</dt><dd>2026-07-27</dd>
+<dt>published_date</dt><dd>2026-08-30</dd>
+<dt>Category</dt><dd>media</dd>
+<dt>Status</dt><dd>awaiting-test</dd>
+<dt>직접 실행 여부</dt><dd>일부 설치·로드 확인 기록은 있으나 matrix 전체 생성 테스트는 안 함</dd>
+<dt>직접 측정 여부</dt><dd>개별 사양·일부 원문 수치는 있으나 동일 protocol 비교 측정 없음</dd>
+<dt>date_basis</dt><dd>통합 대상 원문 페이지의 게시일 범위를 사용</dd>
+<dt>promoted_asset_url</dt><dd>null</dd>
+</dl>
+    <h2>한 줄 요약</h2>
+    <p>여러 TTS 조사 페이지를 하나의 설치·실행·사양 matrix로 통합한다. 설치됨과 생성 검증됨을 구분한다.</p>
+    <h2>조사 배경</h2>
+<p>동일한 DGX Spark TTS 현황이 여러 Research 페이지에 반복되어 M 그룹을 하나의 provenance-preserving matrix로 압축했다.</p>
+<h2>확인한 내용</h2>
+<ul>
+<li>원문 기준 Qwen3-TTS는 운영 중이며, Supertone·OmniVoice·MagpieTTS·MOSS 계열은 설치·weights·생성 테스트 상태가 서로 다르다.</li>
+<li>MOSS-TTS Family는 8B·1.7B·Realtime 2B·TTSD 8B의 용도와 사양을 설명한다.</li>
+<li>MOSS-TTS-GGUF는 gated 승인 필요로 미설치 상태로 기록되어 있다.</li>
+<li>원문은 일부 모델의 로드 검증·크기·언어·용도와 생성 테스트 미실시를 구분한다.</li>
+</ul>
+<h2>확인하지 못한 내용</h2>
+<ul>
+<li>각 모델의 실제 생성 테스트와 품질 비교</li>
+<li>한국어·zero-shot cloning·실시간 latency의 동일 조건 비교</li>
+<li>현재 파일 경로·가중치의 지속성</li>
+<li>MOSS-TTS-GGUF 접근 승인과 실행</li>
+</ul>
+<h2>직접 실행 여부</h2>
+<p>일부 설치·로드 확인 기록은 있으나 matrix 전체 생성 테스트는 안 함</p>
+<h2>직접 측정 여부</h2>
+<p>개별 사양·일부 원문 수치는 있으나 동일 protocol 비교 측정 없음</p>
+<h2>다음 실험/검증 계획</h2>
+<ol>
+<li>각 모델의 설치 여부를 현재 환경에서 다시 inventory한다.</li>
+<li>동일 한국어 문장·참조 음성·출력 형식으로 생성 smoke test를 한다.</li>
+<li>생성 시간·음질·메모리·장문 안정성을 분리 기록한 뒤 DevSnack 자산 승격 여부를 판단한다.</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://devsnack-blog.vercel.app/research/moss-tts-gguf">Original DevSnack Research 원문</a></li>
+<li>원문에 수록된 주요 출처:</li>
+<li><a href="https://devsnack-blog.vercel.app/research/moss-tts-gguf">MOSS-TTS-GGUF</a></li>
+<li><a href="https://devsnack-blog.vercel.app/research/higgs-tts-3-4b">Higgs TTS 3 4B</a></li>
+<li><a href="https://devsnack-blog.vercel.app/research/nvidia-magpietts-357m">NVIDIA MagpieTTS 357M</a></li>
+<li><a href="https://devsnack-blog.vercel.app/research/omnivoice-0-6b">OmniVoice 0.6B</a></li>
+<li><a href="https://devsnack-blog.vercel.app/research/supertone-3">Supertone 3</a></li>
+<li><a href="https://devsnack-blog.vercel.app/research/moss-tts-family-8b-1-7b-realtime-2b-ttsd-8b">MOSS-TTS Family</a></li>
+</ul>
+<h2>Original DevSnack URL</h2>
+<ul>
+<li>https://devsnack-blog.vercel.app/research/moss-tts-gguf</li>
+</ul>
+<h2>Promotion</h2>
+<ul>
+<li>이 Note는 조사 단계 기록이다. 직접 실행·측정·적용 결과가 별도 자산으로 검증되기 전까지 <code>promoted_asset_url</code>은 <code>null</code>이다.</li>
+</ul>
+  </main>
+</body>
+</html>
