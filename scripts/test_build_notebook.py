@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class BuildNotebookTest(unittest.TestCase):
     def test_frontmatter_contains_two_dates_and_status(self):
-        source = ROOT / 'source' / 'agents' / 'oh-my-hermes-omh-hermes-agent.md'
+        source = ROOT / 'source' / 'agents' / 'oh-my-hermes-omh.md'
         meta, body = parse_frontmatter(source.read_text())
         self.assertEqual(meta['researched_date'], '2026-08-19')
         self.assertEqual(meta['published_date'], '2026-08-30')
@@ -39,7 +39,7 @@ class BuildNotebookTest(unittest.TestCase):
             self.assertEqual(len(manifest), 24)
             self.assertTrue((root / 'index.html').exists())
             self.assertEqual(len(list((root / 'notes').glob('*.html'))), 24)
-            generated = (root / 'notes' / 'oh-my-hermes-omh-hermes-agent.html').read_text()
+            generated = (root / 'notes' / 'oh-my-hermes-omh.html').read_text()
             self.assertIn('researched_date', generated)
             self.assertIn('Original DevSnack URL', generated)
             self.assertIn('https://devsnack-blog.vercel.app/research/oh-my-hermes-omh-hermes-agent', generated)

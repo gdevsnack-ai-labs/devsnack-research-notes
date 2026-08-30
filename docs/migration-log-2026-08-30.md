@@ -8,7 +8,7 @@ Source of truth: `outputs/devsnack-content-role-inventory-2026-08-30.md` and the
 
 ## Migrated public R1 — 10
 
-1. DeepSeek Harness (dsh) → `agents/deepseek-harness-dsh-everything-is-a-plugin.md`
+1. DeepSeek Harness (dsh) → `agents/deepseek-harness-dsh.md`
 2. Airy Studio → `media/airy-studio-tts.md`
 3. Herdr → `agents/herdr-yc-f26.md`
 4. TencentDB Agent Memory → `agents/tencentdb-agent-memory.md`
@@ -16,13 +16,13 @@ Source of truth: `outputs/devsnack-content-role-inventory-2026-08-30.md` and the
 6. TokenChaser Lab Note pattern → `tools/tokenchaser-lab-note.md`
 7. DeepSeek V4 Pro 0813 → `models/deepseek-v4-pro-0813-1-6t-ga.md`
 8. Qwen3.8-2.4T-A95B → `models/qwen3-8-2-4t-a95b-qwen3-8-max.md`
-9. FLUX 3 → `media/flux-3-black-forest-labs.md`
+9. FLUX 3 → `media/flux-3.md`
 10. AI Avatar / VTuber → `media/ai-avatar-vtuber-sadtalker.md`
 
 ## Migrated public R2 — 11
 
-1. Oh My Hermes (OMH) → `agents/oh-my-hermes-omh-hermes-agent.md`
-2. DFlash 2 + Qwen3.8-27B → `models/dflash-2-qwen3-8-27b-vs-mtp.md`
+1. Oh My Hermes (OMH) → `agents/oh-my-hermes-omh.md`
+2. DFlash 2 + Qwen3.8-27B → `models/dflash-2-qwen3-8-27b.md`
 3. TokenChaser Self Bench Pack → `tools/tokenchaser-self-bench-pack-gb10-llm.md`
 4. Karakeep → `tools/karakeep-hoarder.md`
 5. MiniMax H3 Turbo LoRA → `media/minimax-h3-turbo-lora-4-step-3-2-stage.md`

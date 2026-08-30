@@ -46,7 +46,7 @@
 
 | title | category | status | external_url |
 |---|---|---|---|
-| DeepSeek Harness (dsh) | agents | research-complete | `/notes/deepseek-harness-dsh-everything-is-a-plugin.html` |
-| Oh My Hermes (OMH) | agents | experiment-candidate | `/notes/oh-my-hermes-omh-hermes-agent.html` |
-| DFlash 2 + Qwen3.8-27B | models | experiment-candidate | `/notes/dflash-2-qwen3-8-27b-vs-mtp.html` |
-| FLUX 3 | media | research-complete | `/notes/flux-3-black-forest-labs.html` |
+| DeepSeek Harness (dsh) | agents | research-complete | `/notes/deepseek-harness-dsh.html` |
+| Oh My Hermes (OMH) | agents | experiment-candidate | `/notes/oh-my-hermes-omh.html` |
+| DFlash 2 + Qwen3.8-27B | models | experiment-candidate | `/notes/dflash-2-qwen3-8-27b.html` |
+| FLUX 3 | media | research-complete | `/notes/flux-3.html` |
