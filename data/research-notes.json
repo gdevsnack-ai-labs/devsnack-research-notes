@@ -489,8 +489,8 @@
     "published_date": "2026-08-30",
     "category": "tools",
     "status": "experiment-candidate",
-    "summary": "결정론적 84개 툴콜링 시나리오를 기존 속도·품질 벤치에 통합하는 후보 조사다.",
-    "direct_execution": "호환성 확인만; benchmark 실행 안 함",
+    "summary": "LLM이 도구를 고르고, 인자를 채우고, 여러 호출을 이어가는 능력을 재현 가능한 방식으로 확인하는 69개 표준 시나리오 기반 평가 도구다.",
+    "direct_execution": "호환성과 공식 문서만 확인; benchmark 실행 안 함",
     "direct_measurement": "직접 점수 측정 없음",
     "original_devsnack_url": "https://devsnack-blog.vercel.app/research/tool-eval-bench",
     "promoted_asset_url": null,
@@ -501,7 +501,14 @@
     "external_url": "https://gdevsnack-ai-labs.github.io/devsnack-research-notes/notes/tool-eval-bench.html",
     "sources": [
       "https://devsnack-blog.vercel.app/research/tool-eval-bench",
-      "https://github.com/SeraphimSerapis/tool-eval-bench"
+      "https://github.com/SeraphimSerapis/tool-eval-bench",
+      "https://github.com/SeraphimSerapis/tool-eval-bench/blob/main/docs/methodology.md",
+      "https://github.com/SeraphimSerapis/tool-eval-bench/blob/main/docs/backends.md",
+      "https://github.com/SeraphimSerapis/tool-eval-bench/blob/main/docs/cli-reference.md",
+      "https://github.com/SeraphimSerapis/tool-eval-bench/blob/main/docs/artifacts.md",
+      "https://github.com/SeraphimSerapis/tool-eval-bench/blob/main/docs/related-work.md",
+      "https://devsnack-blog.vercel.app/benchmarks",
+      "https://github.com/gdevsnack-ai-labs/gb10-local-llm-benchmark"
     ]
   }
 ]
