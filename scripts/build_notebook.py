@@ -194,42 +194,128 @@ def markdown_to_html(body: str) -> str:
     return "\n".join(output)
 
 
+STATUS_LABELS = {
+    "research-complete": "조사 완료",
+    "experiment-candidate": "실험 후보",
+    "awaiting-test": "테스트 대기",
+    "archived": "보관됨",
+}
+CATEGORY_LABELS = {
+    "models": "Models",
+    "tools": "Tools",
+    "agents": "Agents",
+    "media": "Media",
+    "infra": "Infra",
+    "misc": "Misc",
+}
+STATUS_CLASSES = {
+    "research-complete": "status-research-complete",
+    "experiment-candidate": "status-experiment-candidate",
+    "awaiting-test": "status-awaiting-test",
+    "archived": "status-archived",
+}
+
+
+def status_label(status: str) -> str:
+    return STATUS_LABELS.get(status, status)
+
+
 def metadata_html(record: dict[str, Any]) -> str:
     fields = [
-        ("제목", record["title"]),
-        ("researched_date", record["researched_date"]),
-        ("published_date", record["published_date"]),
-        ("Category", record["category"]),
-        ("Status", record["status"]),
-        ("직접 실행 여부", record["direct_execution"]),
-        ("직접 측정 여부", record["direct_measurement"]),
-        ("date_basis", record["date_basis"]),
-        ("promoted_asset_url", record["promoted_asset_url"] or "null"),
+        ("조사일", record["researched_date"]),
+        ("게시일", record["published_date"]),
+        ("분류", CATEGORY_LABELS.get(record["category"], record["category"])),
+        ("상태", record["status"]),
+        ("직접 실행", record["direct_execution"]),
+        ("직접 측정", record["direct_measurement"]),
+        ("날짜 기준", record["date_basis"]),
+        ("승격 자산", record["promoted_asset_url"] or "아직 없음 (별도 자산 미생성)"),
     ]
-    rows = "\n".join(f"<dt>{html.escape(label)}</dt><dd>{inline_markdown(str(value))}</dd>" for label, value in fields)
-    return f"<dl>\n{rows}\n</dl>"
+    rows: list[str] = []
+    for label, value in fields:
+        if label == "상태":
+            value_html = (
+                f'<span class="status-chip {STATUS_CLASSES.get(str(value), "status-archived")}"'
+                f'>{html.escape(status_label(str(value)))}</span>'
+            )
+        elif label == "승격 자산" and record["promoted_asset_url"]:
+            href = html.escape(str(record["promoted_asset_url"]), quote=True)
+            value_html = f'<a href="{href}">별도 자산 열기 ↗</a>'
+        else:
+            value_html = html.escape(str(value))
+        rows.append(f'<div class="meta-item"><dt>{html.escape(label)}</dt><dd>{value_html}</dd></div>')
+    return f'<dl class="meta-list">{"".join(rows)}</dl>'
 
 
 def render_note(record: dict[str, Any]) -> str:
     body_html = markdown_to_html(record["body"])
     title = html.escape(record["title"], quote=True)
+    summary = html.escape(record["summary"], quote=True)
+    canonical = html.escape(record["external_url"], quote=True)
+    category = html.escape(str(CATEGORY_LABELS.get(record["category"], record["category"])))
+    status = record["status"]
+    status_class = STATUS_CLASSES.get(status, "status-archived")
+    status_text = html.escape(status_label(status))
+    original_url = html.escape(record["original_devsnack_url"], quote=True)
     return f'''<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index,follow">
+  <meta name="description" content="{summary}">
+  <meta name="author" content="DevSnack Research">
+  <link rel="canonical" href="{canonical}">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{title} — DevSnack Research Notebook">
+  <meta property="og:description" content="{summary}">
+  <meta property="og:url" content="{canonical}">
   <title>{title} — DevSnack Research Notebook</title>
+  <link rel="stylesheet" href="../assets/notebook.css">
 </head>
 <body>
-  <main>
-    <p><a href="../index.html">Research Notebook</a></p>
-    <p><strong>Research-stage Notebook:</strong> 이 문서는 완성된 Knowledge 글이 아니라 조사·불확실성·후속 검증을 기록한 공개 Note다.</p>
-    {metadata_html(record)}
-    <h2>한 줄 요약</h2>
-    <p>{inline_markdown(record["summary"])}</p>
-    {body_html}
-  </main>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="topbar">
+        <a class="back-link" href="../index.html">← Research Notebook</a>
+        <a class="brand-link" href="https://devsnack-blog.vercel.app/research">DevSnack Research ↗</a>
+      </div>
+      <p class="eyebrow">Research Note / {category}</p>
+      <div class="title-row">
+        <div class="title-block">
+          <h1>{title}</h1>
+          <p class="lede">{summary}</p>
+        </div>
+        <span class="status-chip {status_class}">{status_text}</span>
+      </div>
+    </header>
+
+    <main class="note-layout">
+      <aside class="meta-card" aria-label="Research note metadata">
+        <div class="meta-card-inner">
+          <p class="card-kicker">At a glance</p>
+          {metadata_html(record)}
+          <div class="scope-note">
+            <strong>Research-stage Note</strong>
+            직접 실행·측정 여부를 확인하고 읽어주세요.
+          </div>
+        </div>
+      </aside>
+
+      <article class="note-content">
+        <div class="content-intro">
+          <p class="section-kicker">Notebook entry</p>
+          <p>조사한 내용과 아직 확인하지 못한 부분을 함께 기록했다. 계획은 완료된 결과가 아니라 다음 검증을 위한 메모로 남겼다.</p>
+        </div>
+        {body_html}
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <p><a href="{original_url}">Original DevSnack URL ↗</a></p>
+      <p>DevSnack Research Notebook · {html.escape(str(record["published_date"]))}</p>
+    </footer>
+  </div>
 </body>
 </html>
 '''
@@ -238,9 +324,21 @@ def render_note(record: dict[str, Any]) -> str:
 def render_index(records: list[dict[str, Any]]) -> str:
     items = []
     for record in records:
+        output_path = html.escape(record["output_path"], quote=True)
+        title = inline_markdown(record["title"])
+        summary = inline_markdown(record["summary"])
+        category = html.escape(str(CATEGORY_LABELS.get(record["category"], record["category"])))
+        status = record["status"]
+        status_class = STATUS_CLASSES.get(status, "status-archived")
+        status_text = html.escape(status_label(status))
         items.append(
-            f'<li><a href="{html.escape(record["output_path"], quote=True)}">{inline_markdown(record["title"])}</a> '
-            f'— {html.escape(record["category"])} / {html.escape(record["status"])}</li>'
+            f'<li class="note-card">'
+            f'<div class="note-card-top"><span class="note-category">{category}</span>'
+            f'<span class="status-chip {status_class}">{status_text}</span></div>'
+            f'<a class="note-card-title" href="{output_path}">{title}</a>'
+            f'<p class="note-card-summary">{summary}</p>'
+            f'<span class="read-link">Read note →</span>'
+            f'</li>'
         )
     joined_items = "\n      ".join(items)
     return f'''<!doctype html>
@@ -249,18 +347,37 @@ def render_index(records: list[dict[str, Any]]) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index,follow">
+  <meta name="description" content="조사 단계의 기술 메모와 후속 검증 계획을 공개하는 DevSnack Research Notebook">
+  <link rel="stylesheet" href="assets/notebook.css">
   <title>DevSnack Research Notebook</title>
 </head>
 <body>
-  <main>
-    <h1>DevSnack Research Notebook</h1>
-    <p>조사 단계·불확실성·후속 실험을 공개하는 Research Notebook이다. 완성된 Knowledge 글 모음이 아니다.</p>
-    <p>총 {len(records)}개 Note · <a href="data/research-notes.json">JSON manifest</a> · <a href="https://github.com/gdevsnack-ai-labs/devsnack-research-notes">source repository</a></p>
-    <h2>Research Notes</h2>
-    <ul>
+  <div class="site-shell index-page">
+    <header class="site-header">
+      <div class="topbar">
+        <a class="back-link" href="https://devsnack-blog.vercel.app/research">← DevSnack Research</a>
+        <a class="brand-link" href="data/research-notes.json">JSON manifest ↗</a>
+      </div>
+      <p class="eyebrow">Public research archive</p>
+      <h1>Research Notebook</h1>
+      <p class="lede">조사 단계의 기술 메모와 후속 검증 계획을 공개한다. 완성된 Knowledge 글과는 다른 속도로 움직이는 기록이다.</p>
+    </header>
+
+    <main>
+      <div class="index-actions">
+        <p class="index-intro">공식 문서에서 확인한 사실, 아직 실행하지 않은 가설, 다음에 검증할 질문을 한곳에 모았다.</p>
+        <span class="stats-line">총 {len(records)}개 Note · <a href="https://github.com/gdevsnack-ai-labs/devsnack-research-notes">source repository ↗</a></span>
+      </div>
+      <ul class="note-grid" aria-label="Research Notes">
       {joined_items}
-    </ul>
-  </main>
+      </ul>
+    </main>
+
+    <footer class="site-footer">
+      <p>DevSnack Research Notebook</p>
+      <p>공개 Note는 조사 상태와 한계를 함께 표시한다.</p>
+    </footer>
+  </div>
 </body>
 </html>
 '''

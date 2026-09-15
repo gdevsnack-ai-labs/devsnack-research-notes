@@ -40,8 +40,10 @@ class BuildNotebookTest(unittest.TestCase):
             self.assertTrue((root / 'index.html').exists())
             self.assertEqual(len(list((root / 'notes').glob('*.html'))), 24)
             generated = (root / 'notes' / 'oh-my-hermes-omh.html').read_text()
-            self.assertIn('researched_date', generated)
-            self.assertIn('Original DevSnack URL', generated)
+            self.assertIn('../assets/notebook.css', generated)
+            self.assertIn('<h1>', generated)
+            self.assertIn('class="meta-card"', generated)
+            self.assertIn('status-chip', generated)
             self.assertIn('https://devsnack-blog.vercel.app/research/oh-my-hermes-omh-hermes-agent', generated)
 
 
