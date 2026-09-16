@@ -19,7 +19,15 @@ class BuildNotebookTest(unittest.TestCase):
         self.assertEqual(meta['published_date'], '2026-08-30')
         self.assertEqual(meta['status'], 'experiment-candidate')
         self.assertIn('## 확인한 내용', body)
-        self.assertIn('## 확인하지 못한 내용', body)
+
+    def test_promoted_tool_eval_note_records_execution_and_update(self):
+        source = ROOT / 'source' / 'tools' / 'tool-eval-bench.md'
+        meta, body = parse_frontmatter(source.read_text())
+        self.assertEqual(meta['updated_date'], '2026-09-16')
+        self.assertEqual(meta['status'], 'research-complete')
+        self.assertEqual(meta['direct_measurement'], '각 variant 69개 시도, 4개 공통 grammar 오류 제외, 65개 채점분; 최고 점수는 N2.5 Mini Q6_K 91/100이다.')
+        self.assertTrue(meta['promoted_asset_url'].endswith('/benchmarks#n2-5-mini-q6-k'))
+        self.assertIn('실제 실행 결과', body)
 
     def test_real_source_inventory_is_24_notes(self):
         notes = collect_notes(ROOT / 'source')
@@ -28,7 +36,9 @@ class BuildNotebookTest(unittest.TestCase):
         self.assertEqual(sum(note['category'] == 'models' for note in notes), 6)
         self.assertEqual(sum(note['category'] == 'media' for note in notes), 9)
         self.assertEqual(sum(note['category'] == 'tools' for note in notes), 4)
-        self.assertTrue(all(note['promoted_asset_url'] is None for note in notes))
+        self.assertEqual(sum(note['promoted_asset_url'] is not None for note in notes), 1)
+        promoted = next(note for note in notes if note['slug'] == 'tool-eval-bench')
+        self.assertTrue(promoted['promoted_asset_url'].endswith('/benchmarks#n2-5-mini-q6-k'))
 
     def test_build_writes_manifest_index_and_generated_html(self):
         with tempfile.TemporaryDirectory() as directory:

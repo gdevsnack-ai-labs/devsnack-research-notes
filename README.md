@@ -51,6 +51,7 @@ python3 scripts/test_build_notebook.py -v
 title: "..."
 researched_date: "YYYY-MM-DD"
 published_date: "YYYY-MM-DD"
+updated_date: "YYYY-MM-DD" # 선택 사항
 category: "models | tools | agents | media | infra | misc"
 status: "research-complete | experiment-candidate | awaiting-test | archived"
 summary: "..."
@@ -63,7 +64,8 @@ date_basis: "..."
 
 - `researched_date`: 원문에 명시된 조사일이 있으면 그 날짜. 없으면 원문 게시일을 사용하고 `date_basis`에 표시한다.
 - `published_date`: 이 Notebook에 공개한 날짜.
-- `promoted_asset_url`: 실제 DevSnack 자산으로 승격되기 전에는 항상 `null`이다.
+- `updated_date`: 직접 실행·측정 결과나 중요한 내용 변경이 있었던 날짜. 변경 전 Note에는 생략할 수 있다.
+- `promoted_asset_url`: 실제 DevSnack 자산으로 승격되기 전에는 `null`이며, Benchmark·Lab·Knowledge 자산으로 연결되면 해당 HTTPS URL을 기록한다.
 
 ## Category
 
@@ -76,7 +78,7 @@ date_basis: "..."
 
 ## Status
 
-- `research-complete`: 조사 자체는 끝났으나 직접 실행·측정 없음
+- `research-complete`: 해당 조사 단계가 끝났음. 직접 실행·측정 여부는 `direct_execution`과 `direct_measurement`에서 별도로 확인한다.
 - `experiment-candidate`: 후속 실행·비교 계획이 있는 후보
 - `awaiting-test`: 환경·지원·권한·호환성 때문에 테스트 대기
 - `archived`: 현재 우선순위가 낮고 provenance 보존만 하는 항목

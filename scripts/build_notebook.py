@@ -83,6 +83,8 @@ def validate_metadata(metadata: dict[str, Any], path: Path) -> None:
     try:
         date.fromisoformat(metadata["researched_date"])
         date.fromisoformat(metadata["published_date"])
+        if metadata.get("updated_date") is not None:
+            date.fromisoformat(str(metadata["updated_date"]))
     except ValueError as exc:
         raise ValueError(f"{path}: dates must use YYYY-MM-DD") from exc
     if metadata["category"] not in VALID_CATEGORIES:
@@ -93,6 +95,8 @@ def validate_metadata(metadata: dict[str, Any], path: Path) -> None:
         raise ValueError(f"{path}: original_devsnack_url must be HTTPS")
     if metadata["promoted_asset_url"] is not None and not str(metadata["promoted_asset_url"]).startswith("https://"):
         raise ValueError(f"{path}: promoted_asset_url must be HTTPS or null")
+    if metadata.get("updated_date") is not None and (not isinstance(metadata["updated_date"], str) or not metadata["updated_date"].strip()):
+        raise ValueError(f"{path}: updated_date must be a non-empty string when present")
 
 
 def collect_notes(source_dir: Path) -> list[dict[str, Any]]:
@@ -231,6 +235,8 @@ def metadata_html(record: dict[str, Any]) -> str:
         ("날짜 기준", record["date_basis"]),
         ("승격 자산", record["promoted_asset_url"] or "아직 없음 (별도 자산 미생성)"),
     ]
+    if record.get("updated_date"):
+        fields.insert(2, ("업데이트", record["updated_date"]))
     rows: list[str] = []
     for label, value in fields:
         if label == "상태":
@@ -257,6 +263,8 @@ def render_note(record: dict[str, Any]) -> str:
     status_class = STATUS_CLASSES.get(status, "status-archived")
     status_text = html.escape(status_label(status))
     original_url = html.escape(record["original_devsnack_url"], quote=True)
+    scope_text = "실제 실행·측정 결과와 아직 확인하지 못한 부분을 함께 기록했다." if record.get("promoted_asset_url") else "조사한 내용과 아직 확인하지 못한 부분을 함께 기록했다."
+    plan_text = "추가 측정 계획은 다음 variant 검증을 위한 메모로 남겼다." if record.get("promoted_asset_url") else "계획은 완료된 결과가 아니라 다음 검증을 위한 메모로 남겼다."
     return f'''<!doctype html>
 <html lang="ko">
 <head>
@@ -305,7 +313,7 @@ def render_note(record: dict[str, Any]) -> str:
       <article class="note-content">
         <div class="content-intro">
           <p class="section-kicker">Notebook entry</p>
-          <p>조사한 내용과 아직 확인하지 못한 부분을 함께 기록했다. 계획은 완료된 결과가 아니라 다음 검증을 위한 메모로 남겼다.</p>
+          <p>{scope_text} {plan_text}</p>
         </div>
         {body_html}
       </article>

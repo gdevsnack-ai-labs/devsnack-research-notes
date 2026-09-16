@@ -2,13 +2,14 @@
 title: "tool-eval-bench (툴콜링 평가)"
 researched_date: "2026-07-05"
 published_date: "2026-08-30"
+updated_date: "2026-09-16"
 category: "tools"
-status: "experiment-candidate"
-summary: "LLM이 도구를 고르고, 인자를 채우고, 여러 호출을 이어가는 능력을 재현 가능한 방식으로 확인하는 69개 표준 시나리오 기반 평가 도구다."
-direct_execution: "호환성과 공식 문서만 확인; benchmark 실행 안 함"
-direct_measurement: "직접 점수 측정 없음"
+status: "research-complete"
+summary: "LLM이 도구를 고르고, 인자를 채우고, 여러 호출을 이어가는 능력을 재현 가능한 방식으로 확인하는 외부 tool-eval-bench를 GB10에서 8개 N2/N2.5 Mini variant에 실제 실행했다."
+direct_execution: "DGX Spark GB10의 llama.cpp OpenAI 호환 endpoint에서 N2/N2.5 Mini 8개 variant에 표준 69개 시나리오를 실제 실행했다."
+direct_measurement: "각 variant 69개 시도, 4개 공통 grammar 오류 제외, 65개 채점분; 최고 점수는 N2.5 Mini Q6_K 91/100이다."
 original_devsnack_url: "https://devsnack-blog.vercel.app/research/tool-eval-bench"
-promoted_asset_url: null
+promoted_asset_url: "https://devsnack-blog.vercel.app/benchmarks#n2-5-mini-q6-k"
 date_basis: "원문 게시일을 researched_date로 사용"
 ---
 
@@ -120,23 +121,47 @@ CI나 기존 benchmark pipeline에 붙일 때는 `--json` 또는 `--json-file re
 
 비교할 때 특히 중요한 값은 `config_fingerprint`다. 이 fingerprint에는 CLI 옵션뿐 아니라 tool-eval-bench 코드의 version과 git SHA도 포함된다. server engine version, quantization, GPU 수, slot 수, speculative decoding mode 같은 deployment metadata도 비교 조건에 들어간다. 같은 모델 이름이라도 quantization이나 실행 코드가 다르면 leaderboard의 같은 cohort로 묶지 않는 이유다.
 
-## 우리 GB10 벤치마크와는 어떻게 다른가
+## 실제 실행 결과 — GB10 정식 외부 Tool Eval
 
-tool-eval-bench 자체는 아직 실행하지 않았다. 따라서 이 글에는 특정 모델의 tool-eval-bench 점수를 넣지 않는다.
+처음 이 Note를 작성할 때는 공식 구조와 llama.cpp 호환성만 확인했고 benchmark를 실행하지 않았다. 이후 tool-eval-bench를 실제 GB10 benchmark lane에 연결해, N2 Mini와 N2.5 Mini의 8개 variant를 같은 조건으로 실행했다.
 
-대신 다른 방식으로 측정한 결과가 궁금하다면, 우리가 별도로 진행한 [DGX Spark GB10 로컬 LLM Benchmark](https://devsnack-blog.vercel.app/benchmarks)를 먼저 참고할 만하다. 그 페이지는 같은 GB10과 llama.cpp 조건에서 여러 GGUF·quantization·MTP variant를 돌리고, 속도뿐 아니라 Knowledge, Coding, Tool-call, Agent-single, Agent-multi를 나눠 비교한 기록이다.
+공통 조건은 다음과 같다.
 
-두 결과는 같은 benchmark가 아니다. 우리 페이지의 Tool-call과 Agent 항목은 고정된 별도 evaluator와 protocol을 사용하고, tool-eval-bench는 자체 mock tool·scenario·trace·safety evaluator를 사용한다. 따라서 숫자를 합쳐서 하나의 종합 점수로 만들거나, 한쪽 결과를 다른 쪽 결과로 바꿔 읽을 수는 없다. 그래도 같은 모델을 두 방식으로 보았을 때 어떤 부분이 일치하고 어떤 부분이 달라지는지 확인하는 참고 자료로는 의미가 있다.
+- tool-eval-bench `2.6.1.dev66+g32862e97a`
+- 표준 69개 시나리오, seed `42`
+- temperature `0.0`, `--no-think`, 순차 실행
+- llama.cpp OpenAI 호환 `/v1/chat/completions`
+- 69개 중 `TC-65`, `TC-66`, `TC-67`, `TC-69`는 llama.cpp structured-output grammar HTTP 400으로 공통 제외
+- 따라서 점수는 65개 채점분, 130점 만점으로 계산
 
-다음에는 GB10에서 사용했던 모델과 variant 중 일부를 같은 조건으로 tool-eval-bench에도 넣어볼 생각이다. 그때는 단순히 점수를 하나 더 추가하는 것이 아니라, 우리 기존 Tool-call·Agent 결과와 tool-eval-bench의 category·completion·safety 결과가 어디서 맞물리는지 비교해보려 한다. 이 교차 검증이 쌓이면 GB10 benchmark의 tool-use 평가 신뢰도도 지금보다 높일 수 있을 것 같다.
+실행 결과는 다음과 같다.
+
+- **N2.5 Mini Q6_K: 91/100** — 118/130, responsiveness 70, deployability 85
+- N2.5 Mini Q5_K_M: 90/100 — 117/130, responsiveness 74, deployability 85
+- N2.5 Mini Q8_0: 90/100 — 117/130, responsiveness 67, deployability 83
+- N2.5 Mini Q4_K_M: 88/100 — 115/130, responsiveness 72, deployability 83
+- N2 Mini UD-Q4_K_M: 85/100 — 110/130, responsiveness 86, deployability 85
+- N2 Mini UD-Q5_K_XL: 85/100 — 111/130, responsiveness 85, deployability 85
+- N2 Mini Q5_K_M: 82/100 — 107/130, responsiveness 88, deployability 84
+- N2 Mini Q6_K: 82/100 — 107/130, responsiveness 86, deployability 83
+
+N2.5 Mini는 tool-use 품질 점수가 더 높았고, N2 Mini는 응답성이 더 높았다. N2.5 Mini의 공통 약점은 Autonomous Planning 33%였고, N2 Mini에서는 Error Recovery·Structured Output 일부가 50%까지 내려갔다. N2 Mini 실행에서는 안전 gate 경고도 관찰됐지만 N2.5 Mini 4개 variant에서는 safety warning이 없었다.
+
+이 결과는 [DevSnack Standard Benchmark](https://devsnack-blog.vercel.app/benchmarks)의 `External tool-eval-bench` 열과 N2/N2.5 Mini [모델군 상세 페이지](https://devsnack-blog.vercel.app/benchmarks/models/n2-5-mini)에 통합했다. 원시 trace와 llama-server 로그는 공개하지 않고 로컬 benchmark evidence로 보존한다.
+
+## 우리 기존 Tool-call suite와의 관계
+
+기존 Standard Benchmark의 `Tool-call`은 15개 고정 시나리오로 tool 선택·인자·실행 성공을 확인하는 내부 evaluator다. 이번 `External tool-eval-bench`는 69개 표준 시나리오와 mock tool conversation trace, recovery, safety, structured output을 사용하는 별도 외부 protocol이다.
+
+두 결과는 서로 대체하거나 합산하지 않는다. 같은 모델을 두 방식으로 보았을 때 tool 선택·인자·복구·안전 결과가 어떻게 달라지는지 비교하는 보완 지표로 사용한다. 현재는 8개 N2/N2.5 Mini variant를 먼저 측정했으며, 앞으로 기존 Standard Benchmark 모델군에 순차적으로 추가할 예정이다.
 
 ## 지금 단계에서의 결론
 
-이 도구는 “모델이 tool calling을 지원한다”는 문장을 확인하는 수준에서 한 단계 더 나아간다. 올바른 도구 선택, 인자 정확도, 다중 호출, 오류 복구, 안전 경계를 같은 mock 환경에서 반복해볼 수 있다는 점이 가장 큰 장점이다. 특히 `completion_rate`, safety warning, `config_fingerprint`를 함께 남기는 구조는 단일 점수만 보여주는 간단한 테스트보다 비교에 유리하다.
+이 도구는 “모델이 tool calling을 지원한다”는 문장을 확인하는 수준에서 한 단계 더 나아간다. 올바른 도구 선택, 인자 정확도, 다중 호출, 오류 복구, 안전 경계를 같은 mock 환경에서 반복해볼 수 있다는 점이 가장 큰 장점이다. 실제 실행에서도 `completion_rate`, safety gate, responsiveness, deployability를 함께 기록할 수 있어 단일 점수만 보여주는 테스트보다 비교에 유리했다.
 
 반면 tool-eval-bench가 곧 실제 agent 전체의 능력을 뜻하는 것은 아니다. 한 assistant와 mock tools의 protocol이고, 독일어 중심 localization과 작성자 추정 난이도라는 한계도 있다. 실제 개발 환경에서의 파일 수정, 긴 repository 작업, 여러 agent의 역할 분담까지 판단하려면 별도 평가가 필요하다.
 
-그래서 현재는 기존 GB10 벤치마크를 대체할 도구라기보다 **tool-call 평가를 더 촘촘하게 만들 수 있는 다음 측정 후보**로 보는 것이 맞다. 실행하지 않은 것을 실행한 것처럼 쓰지 않고, 우선 공식 구조와 한계를 정리해 둔 뒤 실제 측정 결과가 생기면 이 글에서 별도 결과 자산으로 연결할 예정이다.
+그래서 이제 이 글은 실행 전 후보 조사가 아니라 **실제 실행 결과를 포함한 정식 외부 Tool Eval 기록**이다. 기존 Tool-call suite를 대체하지 않고 Standard Benchmark의 별도 열로 승격했으며, 이번 8개 variant를 시작으로 모델군별 결과를 추가할 예정이다. 다만 4개 시나리오는 현재 llama.cpp grammar 호환성 문제로 제외했으므로, 이 결과를 모델 능력의 완전한 점수로 일반화하지 않는다.
 
 ## Sources
 
@@ -147,6 +172,7 @@ tool-eval-bench 자체는 아직 실행하지 않았다. 따라서 이 글에는
 - [Run IDs, artifacts, and labels](https://github.com/SeraphimSerapis/tool-eval-bench/blob/main/docs/artifacts.md)
 - [Related work](https://github.com/SeraphimSerapis/tool-eval-bench/blob/main/docs/related-work.md)
 - [DGX Spark GB10 로컬 LLM Benchmark — DevSnack](https://devsnack-blog.vercel.app/benchmarks)
+- [N2.5 Mini 모델군별 GB10 Benchmark 상세](https://devsnack-blog.vercel.app/benchmarks/models/n2-5-mini)
 - [GB10 benchmark public source repository](https://github.com/gdevsnack-ai-labs/gb10-local-llm-benchmark)
 
 ## Original DevSnack URL
@@ -155,4 +181,4 @@ tool-eval-bench 자체는 아직 실행하지 않았다. 따라서 이 글에는
 
 ## Promotion
 
-- 이 Note는 조사 단계 기록이다. tool-eval-bench 직접 실행·측정·적용·반복 검증이 별도 자산으로 확인되기 전까지 `promoted_asset_url`은 `null`이다.
+- 이 Note는 조사와 첫 직접 실행 결과를 함께 보존하는 기록이다. tool-eval-bench 결과는 DevSnack Standard Benchmark의 `External tool-eval-bench` suite로 승격했으며, 추가 variant 측정은 같은 통합 projection에 이어서 기록한다.

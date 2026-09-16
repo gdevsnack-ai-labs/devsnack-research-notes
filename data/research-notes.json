@@ -487,13 +487,14 @@
     "title": "tool-eval-bench (툴콜링 평가)",
     "researched_date": "2026-07-05",
     "published_date": "2026-08-30",
+    "updated_date": "2026-09-16",
     "category": "tools",
-    "status": "experiment-candidate",
-    "summary": "LLM이 도구를 고르고, 인자를 채우고, 여러 호출을 이어가는 능력을 재현 가능한 방식으로 확인하는 69개 표준 시나리오 기반 평가 도구다.",
-    "direct_execution": "호환성과 공식 문서만 확인; benchmark 실행 안 함",
-    "direct_measurement": "직접 점수 측정 없음",
+    "status": "research-complete",
+    "summary": "LLM이 도구를 고르고, 인자를 채우고, 여러 호출을 이어가는 능력을 재현 가능한 방식으로 확인하는 외부 tool-eval-bench를 GB10에서 8개 N2/N2.5 Mini variant에 실제 실행했다.",
+    "direct_execution": "DGX Spark GB10의 llama.cpp OpenAI 호환 endpoint에서 N2/N2.5 Mini 8개 variant에 표준 69개 시나리오를 실제 실행했다.",
+    "direct_measurement": "각 variant 69개 시도, 4개 공통 grammar 오류 제외, 65개 채점분; 최고 점수는 N2.5 Mini Q6_K 91/100이다.",
     "original_devsnack_url": "https://devsnack-blog.vercel.app/research/tool-eval-bench",
-    "promoted_asset_url": null,
+    "promoted_asset_url": "https://devsnack-blog.vercel.app/benchmarks#n2-5-mini-q6-k",
     "date_basis": "원문 게시일을 researched_date로 사용",
     "slug": "tool-eval-bench",
     "source_path": "source/tools/tool-eval-bench.md",
@@ -508,6 +509,7 @@
       "https://github.com/SeraphimSerapis/tool-eval-bench/blob/main/docs/artifacts.md",
       "https://github.com/SeraphimSerapis/tool-eval-bench/blob/main/docs/related-work.md",
       "https://devsnack-blog.vercel.app/benchmarks",
+      "https://devsnack-blog.vercel.app/benchmarks/models/n2-5-mini",
       "https://github.com/gdevsnack-ai-labs/gb10-local-llm-benchmark"
     ]
   }
