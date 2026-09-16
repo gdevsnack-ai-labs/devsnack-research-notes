@@ -161,8 +161,6 @@ N2.5 Mini는 tool-use 품질 점수가 더 높았고, N2 Mini는 응답성이 �
 
 반면 tool-eval-bench가 곧 실제 agent 전체의 능력을 뜻하는 것은 아니다. 한 assistant와 mock tools의 protocol이고, 독일어 중심 localization과 작성자 추정 난이도라는 한계도 있다. 실제 개발 환경에서의 파일 수정, 긴 repository 작업, 여러 agent의 역할 분담까지 판단하려면 별도 평가가 필요하다.
 
-그래서 이제 이 글은 실행 전 후보 조사가 아니라 **실제 실행 결과를 포함한 정식 외부 Tool Eval 기록**이다. 기존 Tool-call suite를 대체하지 않고 Standard Benchmark의 별도 열로 승격했으며, 이번 8개 variant를 시작으로 모델군별 결과를 추가할 예정이다. 다만 4개 시나리오는 현재 llama.cpp grammar 호환성 문제로 제외했으므로, 이 결과를 모델 능력의 완전한 점수로 일반화하지 않는다.
-
 ## Sources
 
 - [tool-eval-bench 공식 저장소 README](https://github.com/SeraphimSerapis/tool-eval-bench)
