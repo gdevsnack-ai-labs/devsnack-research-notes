@@ -59,6 +59,7 @@ direct_execution: "..."
 direct_measurement: "..."
 original_devsnack_url: "https://devsnack-blog.vercel.app/research/..."
 promoted_asset_url: null
+show_promotion: true # 선택 사항; 별도 승격 자산 메타를 숨길 때 false
 date_basis: "..."
 ```
 

@@ -10,6 +10,7 @@ direct_execution: "DGX Spark GB10의 llama.cpp OpenAI 호환 endpoint에서 N2/N
 direct_measurement: "각 variant 69개 시도, 4개 공통 grammar 오류 제외, 65개 채점분; 최고 점수는 N2.5 Mini Q6_K 91/100이다."
 original_devsnack_url: "https://devsnack-blog.vercel.app/research/tool-eval-bench"
 promoted_asset_url: null
+show_promotion: false
 date_basis: "원문 게시일을 researched_date로 사용"
 ---
 

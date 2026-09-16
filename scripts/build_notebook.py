@@ -38,6 +38,10 @@ def parse_scalar(raw: str) -> Any:
     value = raw.strip()
     if value == "null":
         return None
+    if value == "true":
+        return True
+    if value == "false":
+        return False
     if value.startswith('"') and value.endswith('"'):
         return json.loads(value)
     return value
@@ -233,8 +237,9 @@ def metadata_html(record: dict[str, Any]) -> str:
         ("직접 실행", record["direct_execution"]),
         ("직접 측정", record["direct_measurement"]),
         ("날짜 기준", record["date_basis"]),
-        ("승격 자산", record["promoted_asset_url"] or "아직 없음 (별도 자산 미생성)"),
     ]
+    if record.get("show_promotion", True):
+        fields.append(("승격 자산", record["promoted_asset_url"] or "아직 없음 (별도 자산 미생성)"))
     if record.get("updated_date"):
         fields.insert(2, ("업데이트", record["updated_date"]))
     rows: list[str] = []
