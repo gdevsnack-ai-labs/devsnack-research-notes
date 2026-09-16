@@ -9,7 +9,7 @@ summary: "LLM이 도구를 고르고, 인자를 채우고, 여러 호출을 이�
 direct_execution: "DGX Spark GB10의 llama.cpp OpenAI 호환 endpoint에서 N2/N2.5 Mini 8개 variant에 표준 69개 시나리오를 실제 실행했다."
 direct_measurement: "각 variant 69개 시도, 4개 공통 grammar 오류 제외, 65개 채점분; 최고 점수는 N2.5 Mini Q6_K 91/100이다."
 original_devsnack_url: "https://devsnack-blog.vercel.app/research/tool-eval-bench"
-promoted_asset_url: "https://devsnack-blog.vercel.app/benchmarks#n2-5-mini-q6-k"
+promoted_asset_url: null
 date_basis: "원문 게시일을 researched_date로 사용"
 ---
 
@@ -108,7 +108,7 @@ Hard Mode인 P는 이미 표준 시나리오에서 높은 점수를 낸 모델�
 
 CI나 기존 benchmark pipeline에 붙일 때는 `--json` 또는 `--json-file results.json`을 쓰는 것이 좋다. JSON mode에서는 stdout에 result envelope가 나오고, 진행 이벤트는 stderr의 JSONL로 분리된다. `run` 명령 외에도 throughput·speculative decoding·context pressure를 다루는 `bench`, 정확도 plugin을 다루는 `plugin`, 저장 결과를 비교하는 `compare`, 중단된 실행을 잇는 `resume` 명령이 있다.
 
-환경변수도 사용할 수 있다. 우선순위는 CLI flag, 실행 프로세스의 environment, `.env`, 자동 발견 순서다. `TOOL_EVAL_BASE_URL`, `TOOL_EVAL_MODEL`, `TOOL_EVAL_API_KEY` 등을 둘 수 있지만, API key는 공개 글이나 report에 남기면 안 된다.
+환경변수도 사용할 수 있다. 우선순위는 CLI flag, 실행 프로세스의 environment, `.env`, 자동 발견 순서다. `TOOL_EVAL_BASE_URL`, `TOOL_EVAL_MODEL`, `TOOL_EVAL_API_KEY` 등을 둘 수 있다. API key가 필요한 endpoint라면 인증정보를 실행 환경에 별도로 설정하고, 명령줄 예시에는 실제 값을 넣지 않는 편이 안전하다.
 
 ## 실행 결과는 무엇으로 남나
 
@@ -176,7 +176,3 @@ N2.5 Mini는 tool-use 품질 점수가 더 높았고, N2 Mini는 응답성이 �
 ## Original DevSnack URL
 
 - https://devsnack-blog.vercel.app/research/tool-eval-bench
-
-## Promotion
-
-- 이 Note는 조사와 첫 직접 실행 결과를 함께 보존하는 기록이다. tool-eval-bench 결과는 DevSnack Standard Benchmark의 `External tool-eval-bench` suite로 승격했으며, 추가 variant 측정은 같은 통합 projection에 이어서 기록한다.

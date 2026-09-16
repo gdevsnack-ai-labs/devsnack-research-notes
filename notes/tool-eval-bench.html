@@ -35,7 +35,7 @@
       <aside class="meta-card" aria-label="Research note metadata">
         <div class="meta-card-inner">
           <p class="card-kicker">At a glance</p>
-          <dl class="meta-list"><div class="meta-item"><dt>조사일</dt><dd>2026-07-05</dd></div><div class="meta-item"><dt>게시일</dt><dd>2026-08-30</dd></div><div class="meta-item"><dt>업데이트</dt><dd>2026-09-16</dd></div><div class="meta-item"><dt>분류</dt><dd>Tools</dd></div><div class="meta-item"><dt>상태</dt><dd><span class="status-chip status-research-complete">조사 완료</span></dd></div><div class="meta-item"><dt>직접 실행</dt><dd>DGX Spark GB10의 llama.cpp OpenAI 호환 endpoint에서 N2/N2.5 Mini 8개 variant에 표준 69개 시나리오를 실제 실행했다.</dd></div><div class="meta-item"><dt>직접 측정</dt><dd>각 variant 69개 시도, 4개 공통 grammar 오류 제외, 65개 채점분; 최고 점수는 N2.5 Mini Q6_K 91/100이다.</dd></div><div class="meta-item"><dt>날짜 기준</dt><dd>원문 게시일을 researched_date로 사용</dd></div><div class="meta-item"><dt>승격 자산</dt><dd><a href="https://devsnack-blog.vercel.app/benchmarks#n2-5-mini-q6-k">별도 자산 열기 ↗</a></dd></div></dl>
+          <dl class="meta-list"><div class="meta-item"><dt>조사일</dt><dd>2026-07-05</dd></div><div class="meta-item"><dt>게시일</dt><dd>2026-08-30</dd></div><div class="meta-item"><dt>업데이트</dt><dd>2026-09-16</dd></div><div class="meta-item"><dt>분류</dt><dd>Tools</dd></div><div class="meta-item"><dt>상태</dt><dd><span class="status-chip status-research-complete">조사 완료</span></dd></div><div class="meta-item"><dt>직접 실행</dt><dd>DGX Spark GB10의 llama.cpp OpenAI 호환 endpoint에서 N2/N2.5 Mini 8개 variant에 표준 69개 시나리오를 실제 실행했다.</dd></div><div class="meta-item"><dt>직접 측정</dt><dd>각 variant 69개 시도, 4개 공통 grammar 오류 제외, 65개 채점분; 최고 점수는 N2.5 Mini Q6_K 91/100이다.</dd></div><div class="meta-item"><dt>날짜 기준</dt><dd>원문 게시일을 researched_date로 사용</dd></div></dl>
           <div class="scope-note">
             <strong>Research-stage Note</strong>
             직접 실행·측정 여부를 확인하고 읽어주세요.
@@ -46,7 +46,7 @@
       <article class="note-content">
         <div class="content-intro">
           <p class="section-kicker">Notebook entry</p>
-          <p>실제 실행·측정 결과와 아직 확인하지 못한 부분을 함께 기록했다. 추가 측정 계획은 다음 variant 검증을 위한 메모로 남겼다.</p>
+          <p>조사한 내용과 아직 확인하지 못한 부분을 함께 기록했다. 계획은 완료된 결과가 아니라 다음 검증을 위한 메모로 남겼다.</p>
         </div>
         <h2>이 도구를 찾아본 이유</h2>
 <p>기존에 쓰던 벤치마크는 prompt를 얼마나 빨리 읽고 답을 얼마나 빨리 생성하는지, 그리고 지식·코딩 문제를 얼마나 잘 푸는지는 보여줬다. 그런데 실제 에이전트 작업에서는 그 앞에 다른 문제가 하나 더 있다. 모델이 <strong>도구를 호출해야 하는지 판단하고, 맞는 도구를 고르고, 인자를 정확히 채우고, 앞선 결과를 다음 호출에 연결하는가</strong> 하는 문제다.</p>
@@ -123,7 +123,7 @@
 </ul>
 <p><code>--base-url</code>을 생략하면 common localhost port를 자동으로 찾는다. 현재 CLI 문서에는 8000, 8080, 8081, 8082, 30000, 4000, 3000, 11434, 5000 순으로 probe한다고 적혀 있다. 자동 발견에 기대기보다 실제 사용 중인 server endpoint를 지정하는 것이 나중에 결과를 재현하기 쉽다.</p>
 <p>CI나 기존 benchmark pipeline에 붙일 때는 <code>--json</code> 또는 <code>--json-file results.json</code>을 쓰는 것이 좋다. JSON mode에서는 stdout에 result envelope가 나오고, 진행 이벤트는 stderr의 JSONL로 분리된다. <code>run</code> 명령 외에도 throughput·speculative decoding·context pressure를 다루는 <code>bench</code>, 정확도 plugin을 다루는 <code>plugin</code>, 저장 결과를 비교하는 <code>compare</code>, 중단된 실행을 잇는 <code>resume</code> 명령이 있다.</p>
-<p>환경변수도 사용할 수 있다. 우선순위는 CLI flag, 실행 프로세스의 environment, <code>.env</code>, 자동 발견 순서다. <code>TOOL_EVAL_BASE_URL</code>, <code>TOOL_EVAL_MODEL</code>, <code>TOOL_EVAL_API_KEY</code> 등을 둘 수 있지만, API key는 공개 글이나 report에 남기면 안 된다.</p>
+<p>환경변수도 사용할 수 있다. 우선순위는 CLI flag, 실행 프로세스의 environment, <code>.env</code>, 자동 발견 순서다. <code>TOOL_EVAL_BASE_URL</code>, <code>TOOL_EVAL_MODEL</code>, <code>TOOL_EVAL_API_KEY</code> 등을 둘 수 있다. API key가 필요한 endpoint라면 인증정보를 실행 환경에 별도로 설정하고, 명령줄 예시에는 실제 값을 넣지 않는 편이 안전하다.</p>
 <h2>실행 결과는 무엇으로 남나</h2>
 <p>완료된 실행은 실행 위치 기준으로 두 가지 결과를 남긴다.</p>
 <ul>
@@ -177,10 +177,6 @@
 <h2>Original DevSnack URL</h2>
 <ul>
 <li>https://devsnack-blog.vercel.app/research/tool-eval-bench</li>
-</ul>
-<h2>Promotion</h2>
-<ul>
-<li>이 Note는 조사와 첫 직접 실행 결과를 함께 보존하는 기록이다. tool-eval-bench 결과는 DevSnack Standard Benchmark의 <code>External tool-eval-bench</code> suite로 승격했으며, 추가 variant 측정은 같은 통합 projection에 이어서 기록한다.</li>
 </ul>
       </article>
     </main>
